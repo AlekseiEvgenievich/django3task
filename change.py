@@ -2,7 +2,7 @@ import random
 
 from datacenter.models import Chastisement, Lesson, Schoolkid
 
-COMMENDATION = ['Молодец!', 'Правильно!', 'Хорошо!', 'Умница!', 'Замечательно!', 'Хвалю!']
+COMMENDATIONS = ['Молодец!', 'Правильно!', 'Хорошо!', 'Умница!', 'Замечательно!', 'Хвалю!']
 
 
 def get_kid(full_name):
@@ -21,7 +21,7 @@ def fix_marks(full_name):
     kid = get_kid(full_name)
     if not isinstance(kid, Schoolkid):
         return
-    Mark.objects.filter(schoolkid=kid, points__in=[4,5]).update(points=2)
+    Mark.objects.filter(schoolkid=kid, points__in=[2,3]).update(points=5)
 
 
 def remove_chastisements(full_name):
@@ -41,7 +41,7 @@ def create_commendation(full_name, subject):
     if subject_lessons:
         random_lesson = subject_lessons.first()
         Commendation.objects.create(
-            text=random.choice(COMMENDATION),
+            text=random.choice(COMMENDATIONS),
             created=random_lesson.date,
             schoolkid=kid,
             subject=random_lesson.subject,
